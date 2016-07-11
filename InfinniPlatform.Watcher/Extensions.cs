@@ -7,7 +7,7 @@ namespace InfinniPlatform.Watcher
     {
         public static string ToPartPath(this string s, string sourcePath)
         {
-            return s.Replace(sourcePath, string.Empty).TrimStart(Path.PathSeparator);
+            return s.Replace(sourcePath, string.Empty).TrimStart(Path.DirectorySeparatorChar);
         }
 
         public static void CheckSettings(WatcherSettings settings)

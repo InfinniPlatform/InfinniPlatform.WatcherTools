@@ -99,10 +99,6 @@
 			}
 		}
 
-		# Add InfinniPlatform reference
-		$platformVersion = (Select-Xml -Path $packagesConfigPath -XPath "//package[@id='InfinniPlatform.Sdk']").Node.version
-		$projectNuspec = $projectNuspec + "            <dependency id=""InfinniPlatform"" version=""[$platformVersion]"" />`r`n"
-
 		$projectNuspec = $projectNuspec + `
 			"        </dependencies>`r`n" + `
 			"    </metadata>`r`n" + `
@@ -147,17 +143,10 @@
 			$projectNuspec = $projectNuspec + "        <file target=""lib\$framework"" src=""$projectAssemblyName.xml"" />`r`n"
 		}
 
-		# Add config-file
-
-		$projectNuspec = $projectNuspec + "        <file target=""lib\$framework"" src=""AppExtension.json"" />`r`n"
-		$projectRefs += "$projectName.$version\lib\$framework\AppExtension.json"
-
-		$projectNuspec = $projectNuspec + `
-			"        <file target=""lib\$framework\$projectName.references"" src=""$projectName.references"" />`r`n" + `
+		$projectNuspec = $projectNuspec + `			
 			"    </files>`r`n" + `
 			"</package>"
-
-		Set-Content (Join-Path $outputDir "$projectName.references") -Value ($projectRefs | Sort-Object | Get-Unique -AsString)
+		
 		Set-Content (Join-Path $outputDir "$projectName.nuspec") -Value $projectNuspec
 	}
 }

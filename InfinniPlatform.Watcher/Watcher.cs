@@ -7,16 +7,14 @@ namespace InfinniPlatform.Watcher
 {
     public class Watcher : ApplicationEventHandler
     {
-        private static readonly string[] AllowedExtentions = {".json"};
-
-        public Watcher(WatcherSettings settings) : base(0)
+        public Watcher(WatcherSettings settings) : base(1)
         {
             _settings = settings;
         }
 
         private readonly WatcherSettings _settings;
 
-        public void RegisterWatcher()
+        public override void OnAfterStart()
         {
             Extensions.CheckSettings(_settings);
 
@@ -38,10 +36,6 @@ namespace InfinniPlatform.Watcher
             watcher.EnableRaisingEvents = true;
 
             Console.WriteLine($"Changes within directory {_settings.SourceDirectory} will now be transferred to directory {_settings.DestinationDirectory}.");
-        }
-
-        public override void OnAfterStart()
-        {
         }
 
         private void SyncDirectoriesIfNeeded()
@@ -71,7 +65,7 @@ namespace InfinniPlatform.Watcher
 
             if (extension != string.Empty)
             {
-                if (AllowedExtentions.Contains(extension))
+                if (_settings.WatchingFileExtensions.Contains(extension))
                 {
                     var part = eventArgs.FullPath.ToPartPath(_settings.SourceDirectory);
 
@@ -104,7 +98,7 @@ namespace InfinniPlatform.Watcher
 
             if (extension != string.Empty)
             {
-                if (AllowedExtentions.Contains(extension))
+                if (_settings.WatchingFileExtensions.Contains(extension))
                 {
                     var part = eventArgs.FullPath.ToPartPath(_settings.SourceDirectory);
 
@@ -133,7 +127,7 @@ namespace InfinniPlatform.Watcher
 
             if (extension != string.Empty)
             {
-                if (AllowedExtentions.Contains(extension))
+                if (_settings.WatchingFileExtensions.Contains(extension))
                 {
                     var part = eventArgs.FullPath.ToPartPath(_settings.SourceDirectory);
 

@@ -12,7 +12,7 @@ namespace InfinniPlatform.Watcher.IoC
         public void Load(IContainerBuilder builder)
         {
             builder.RegisterType<Watcher>()
-                   .As<ApplicationEventHandler>()
+                   .As<IApplicationEventHandler>()
                    .SingleInstance();
 
             builder.RegisterFactory(r => r.Resolve<IAppConfiguration>()
