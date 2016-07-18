@@ -73,12 +73,6 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.files\Config\AppExtension.Debug.json">
-      <Link>AppExtension.Debug.json</Link>
-    </None>
-    <None Include="..\.files\Config\AppExtension.Release.json">
-      <Link>AppExtension.Release.json</Link>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />

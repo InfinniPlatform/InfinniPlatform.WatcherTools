@@ -7,17 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "InfinniPlatform.Watcher", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".files", ".files", "{C2B2B413-4941-4ACB-A0D4-C7DB53263CEA}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{CEBA758E-7A7C-41A3-B53E-9AA581C88E0E}"
-	ProjectSection(SolutionItems) = preProject
-		.files\Config\AppExtension.Debug.json = .files\Config\AppExtension.Debug.json
-		.files\Config\AppExtension.Release.json = .files\Config\AppExtension.Release.json
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Packaging", "Packaging", "{B3DAE5A3-4896-4C13-BCD3-FDF09A84A1F4}"
 	ProjectSection(SolutionItems) = preProject
 		.files\Packaging\BuildNupkg.bat = .files\Packaging\BuildNupkg.bat
 		.files\Packaging\BuildNupkg.ps1 = .files\Packaging\BuildNupkg.ps1
-		.files\Packaging\BuildSymbols.ps1 = .files\Packaging\BuildSymbols.ps1
 		.files\Packaging\CreateNuspec.ps1 = .files\Packaging\CreateNuspec.ps1
 		.files\Packaging\GlobalAssemblyInfo.cs = .files\Packaging\GlobalAssemblyInfo.cs
 	EndProjectSection
@@ -37,7 +30,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{CEBA758E-7A7C-41A3-B53E-9AA581C88E0E} = {C2B2B413-4941-4ACB-A0D4-C7DB53263CEA}
 		{B3DAE5A3-4896-4C13-BCD3-FDF09A84A1F4} = {C2B2B413-4941-4ACB-A0D4-C7DB53263CEA}
 	EndGlobalSection
 EndGlobal
