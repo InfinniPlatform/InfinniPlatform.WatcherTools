@@ -16,26 +16,27 @@ namespace InfinniPlatform.Watcher
 
         public override void OnAfterStart()
         {
-            Extensions.CheckSettings(_settings);
+            if (Extensions.CheckSettings(_settings))
+            {
+                Console.WriteLine("HALT! You are now watched by InfinniPlatform.Watch!");
 
-            Console.WriteLine("HALT! You are now watched by InfinniPlatform.Watch!");
+                SyncDirectoriesIfNeeded();
 
-            SyncDirectoriesIfNeeded();
+                var watcher = new FileSystemWatcher
+                              {
+                                  Path = _settings.SourceDirectory,
+                                  IncludeSubdirectories = true
+                              };
 
-            var watcher = new FileSystemWatcher
-                          {
-                              Path = _settings.SourceDirectory,
-                              IncludeSubdirectories = true
-                          };
+                watcher.Changed += (sender, eventArgs) => Sync(eventArgs);
+                watcher.Created += (sender, eventArgs) => Create(eventArgs);
+                watcher.Deleted += (sender, eventArgs) => Delete(eventArgs);
+                watcher.Renamed += (sender, eventArgs) => Sync(eventArgs);
 
-            watcher.Changed += (sender, eventArgs) => Sync(eventArgs);
-            watcher.Created += (sender, eventArgs) => Create(eventArgs);
-            watcher.Deleted += (sender, eventArgs) => Delete(eventArgs);
-            watcher.Renamed += (sender, eventArgs) => Sync(eventArgs);
+                watcher.EnableRaisingEvents = true;
 
-            watcher.EnableRaisingEvents = true;
-
-            Console.WriteLine($"Changes within directory {_settings.SourceDirectory} will now be transferred to directory {_settings.DestinationDirectory}.");
+                Console.WriteLine($"Changes within directory {_settings.SourceDirectory} will now be transferred to directory {_settings.DestinationDirectory}.");
+            }
         }
 
         private void SyncDirectoriesIfNeeded()
@@ -45,7 +46,7 @@ namespace InfinniPlatform.Watcher
 
             if (destFiles.Length != sourceFiles.Length)
             {
-                Console.WriteLine($"Directories {_settings.SourceDirectory} {_settings.DestinationDirectory} are not same. Syncing...");
+                Console.WriteLine($"Content of directories {_settings.SourceDirectory} and {_settings.DestinationDirectory} are different. Syncing...");
 
                 Directory.Delete(_settings.DestinationDirectory, true);
 

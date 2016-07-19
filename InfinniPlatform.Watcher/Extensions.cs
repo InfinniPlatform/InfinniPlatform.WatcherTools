@@ -10,17 +10,47 @@ namespace InfinniPlatform.Watcher
             return s.Replace(sourcePath, string.Empty).TrimStart(Path.DirectorySeparatorChar);
         }
 
-        public static void CheckSettings(WatcherSettings settings)
+        public static bool CheckSettings(WatcherSettings settings)
         {
+            var isCorrectSettings = true;
+
+            var n = Environment.NewLine;
+
+            var s = $"{n}Add watcher setting to AppExtentions.json configuration file:" +
+                    $"{n}  /* Настройки наблюдателя */" +
+                    $"{n}  \"watcher\": {{" +
+                    $"{n}      /* Директория источника метаданных */" +
+                    $"{n}      \"SourceDirectory\": <path>," +
+                    $"{n}      /* Директория для синхнонизации */" +
+                    $"{n}      \"DestinationDirectory\": <path>," +
+                    $"{n}      /* Расширения синхронизируемых файлов */" +
+                    $"{n}      \"WatchingFileExtensions\": [" +
+                    $"{n}          \".json\"" +
+                    $"{n}      ]" +
+                    $"{n}  }}";
+
             if (string.IsNullOrEmpty(settings.SourceDirectory))
             {
-                throw new ArgumentException("SourceDictionary in watcher settings cannot be empty.");
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("SourceDictionary in watcher settings cannot be empty.");
+                Console.BackgroundColor = ConsoleColor.Black;
+                isCorrectSettings = false;
             }
 
             if (string.IsNullOrEmpty(settings.DestinationDirectory))
             {
-                throw new ArgumentException("DestinationDirectory in watcher settings cannot be empty.");
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("DestinationDirectory in watcher settings cannot be empty.");
+                Console.BackgroundColor = ConsoleColor.Black;
+                isCorrectSettings = false;
             }
+
+            if (!isCorrectSettings)
+            {
+                Console.WriteLine(s);
+            }
+
+            return isCorrectSettings;
         }
 
         public static void ConsoleLogEvent(FileSystemEventArgs eventArgs, string part)
@@ -42,7 +72,7 @@ namespace InfinniPlatform.Watcher
             catch (Exception e)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
-                Console.WriteLine("Got error!");
+                Console.WriteLine("Error.");
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.WriteLine(e.ToString());
             }

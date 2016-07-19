@@ -33,11 +33,6 @@
 			| Select-String -Pattern 'AssemblyVersion\s*\(\s*\"(?<version>.*?)\"\s*\)' `
 			| ForEach-Object { $_.Matches[0].Groups['version'].Value }
 
-		if ($branchName -and $branchName -notlike '*release-*')
-		{
-			$version = $version + '-' + ($branchName -replace '^(refs/heads/){0,1}(f\-){0,1}', '')
-		}
-
 		Write-Host $version
 		Write-Host $branchName
 
@@ -80,7 +75,7 @@
 			{
 				foreach ($package in $packages)
 				{
-					$projectNuspec = $projectNuspec + "            <dependency id=""$($package.id)"" version=""[$($package.version)]"" />`r`n"
+					$projectNuspec = $projectNuspec + "            <dependency id=""$($package.id)"" version=""$($package.version)"" />`r`n"
 				}
 			}
 		}
