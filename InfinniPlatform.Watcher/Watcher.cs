@@ -5,7 +5,7 @@ using InfinniPlatform.Sdk.Hosting;
 
 namespace InfinniPlatform.Watcher
 {
-    public class Watcher : ApplicationEventHandler
+    public class Watcher : AppEventHandler
     {
         public Watcher(WatcherSettings settings) : base(1)
         {
